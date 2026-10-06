@@ -1,0 +1,274 @@
+{
+  "source": "USGS ANSS Comprehensive Earthquake Catalog (ComCat), FDSN event web service",
+  "endpoint": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+  "query": {
+    "format": "csv",
+    "orderby": "time-asc",
+    "minmagnitude": 5,
+    "eventtype": "earthquake",
+    "window": "one request per calendar year, starttime=YYYY-01-01T00:00:00, endtime=YYYY-12-31T23:59:59.999 (UTC)",
+    "firstYear": 1973,
+    "lastYear": 2025
+  },
+  "fetchedAt": "2026-10-06T21:04:18.322Z",
+  "licence": "USGS-authored or produced data and information are in the U.S. public domain.",
+  "total": 87866,
+  "magnitude": {
+    "min": 5,
+    "max": 9.1
+  },
+  "depthKm": {
+    "min": -3,
+    "max": 700
+  },
+  "years": {
+    "1973": {
+      "apiCount": 1435,
+      "rows": 1435
+    },
+    "1974": {
+      "apiCount": 1410,
+      "rows": 1410
+    },
+    "1975": {
+      "apiCount": 1552,
+      "rows": 1552
+    },
+    "1976": {
+      "apiCount": 1762,
+      "rows": 1762
+    },
+    "1977": {
+      "apiCount": 1768,
+      "rows": 1768
+    },
+    "1978": {
+      "apiCount": 1599,
+      "rows": 1599
+    },
+    "1979": {
+      "apiCount": 1451,
+      "rows": 1451
+    },
+    "1980": {
+      "apiCount": 1403,
+      "rows": 1403
+    },
+    "1981": {
+      "apiCount": 1259,
+      "rows": 1259
+    },
+    "1982": {
+      "apiCount": 1488,
+      "rows": 1488
+    },
+    "1983": {
+      "apiCount": 1787,
+      "rows": 1787
+    },
+    "1984": {
+      "apiCount": 1652,
+      "rows": 1652
+    },
+    "1985": {
+      "apiCount": 1790,
+      "rows": 1790
+    },
+    "1986": {
+      "apiCount": 1756,
+      "rows": 1756
+    },
+    "1987": {
+      "apiCount": 1546,
+      "rows": 1546
+    },
+    "1988": {
+      "apiCount": 1574,
+      "rows": 1574
+    },
+    "1989": {
+      "apiCount": 1545,
+      "rows": 1545
+    },
+    "1990": {
+      "apiCount": 1757,
+      "rows": 1757
+    },
+    "1991": {
+      "apiCount": 1578,
+      "rows": 1578
+    },
+    "1992": {
+      "apiCount": 1669,
+      "rows": 1669
+    },
+    "1993": {
+      "apiCount": 1565,
+      "rows": 1565
+    },
+    "1994": {
+      "apiCount": 1689,
+      "rows": 1689
+    },
+    "1995": {
+      "apiCount": 1495,
+      "rows": 1495
+    },
+    "1996": {
+      "apiCount": 1370,
+      "rows": 1370
+    },
+    "1997": {
+      "apiCount": 1235,
+      "rows": 1235
+    },
+    "1998": {
+      "apiCount": 1077,
+      "rows": 1077
+    },
+    "1999": {
+      "apiCount": 1192,
+      "rows": 1192
+    },
+    "2000": {
+      "apiCount": 1494,
+      "rows": 1494
+    },
+    "2001": {
+      "apiCount": 1349,
+      "rows": 1349
+    },
+    "2002": {
+      "apiCount": 1309,
+      "rows": 1309
+    },
+    "2003": {
+      "apiCount": 1366,
+      "rows": 1366
+    },
+    "2004": {
+      "apiCount": 1670,
+      "rows": 1670
+    },
+    "2005": {
+      "apiCount": 1844,
+      "rows": 1844
+    },
+    "2006": {
+      "apiCount": 1879,
+      "rows": 1879
+    },
+    "2007": {
+      "apiCount": 2286,
+      "rows": 2286
+    },
+    "2008": {
+      "apiCount": 1965,
+      "rows": 1965
+    },
+    "2009": {
+      "apiCount": 2072,
+      "rows": 2072
+    },
+    "2010": {
+      "apiCount": 2397,
+      "rows": 2397
+    },
+    "2011": {
+      "apiCount": 2701,
+      "rows": 2701
+    },
+    "2012": {
+      "apiCount": 1698,
+      "rows": 1698
+    },
+    "2013": {
+      "apiCount": 1610,
+      "rows": 1610
+    },
+    "2014": {
+      "apiCount": 1749,
+      "rows": 1749
+    },
+    "2015": {
+      "apiCount": 1571,
+      "rows": 1571
+    },
+    "2016": {
+      "apiCount": 1706,
+      "rows": 1706
+    },
+    "2017": {
+      "apiCount": 1566,
+      "rows": 1566
+    },
+    "2018": {
+      "apiCount": 1768,
+      "rows": 1768
+    },
+    "2019": {
+      "apiCount": 1645,
+      "rows": 1645
+    },
+    "2020": {
+      "apiCount": 1450,
+      "rows": 1450
+    },
+    "2021": {
+      "apiCount": 2227,
+      "rows": 2227
+    },
+    "2022": {
+      "apiCount": 1725,
+      "rows": 1725
+    },
+    "2023": {
+      "apiCount": 1780,
+      "rows": 1780
+    },
+    "2024": {
+      "apiCount": 1507,
+      "rows": 1507
+    },
+    "2025": {
+      "apiCount": 2128,
+      "rows": 2128
+    }
+  },
+  "coastlines": {
+    "source": "Natural Earth 1:50m coastline (public domain)",
+    "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_coastline.geojson",
+    "simplifiedToleranceDeg": 0.03,
+    "lines": 1429,
+    "points": 28689
+  },
+  "plateBoundaries": {
+    "source": "PB2002 (Bird 2003, G-cubed 4(3), 1027), GeoJSON by Hugo Ahlenius, Nordpil",
+    "licence": "Open Data Commons Attribution License (ODC-By) 1.0",
+    "url": "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json",
+    "lines": 241,
+    "points": 6292
+  },
+  "files": {
+    "catalog.bin.gz": {
+      "bytes": 1142393,
+      "gzipBytes": 683153,
+      "sha256": "0574e813865c38ea5211d1f23b471bfbb28aa9268c0179344ccd75c6de21b469"
+    },
+    "details.tsv.gz": {
+      "bytes": 3636542,
+      "gzipBytes": 775537,
+      "sha256": "ff446c1cc6326f35bb01a2e68773cec7d6b3f6ab670504bdaec302859766e4a6"
+    },
+    "coast.bin.gz": {
+      "bytes": 121929,
+      "gzipBytes": 64815,
+      "sha256": "840964858e05de7cb05b4298fe2d57cc9cbbf2a7e4f383c2a924b034fb2d8189"
+    },
+    "plates.bin.gz": {
+      "bytes": 26417,
+      "gzipBytes": 14052,
+      "sha256": "689e6e1ea183238fda3eeaa959cdd3540c6ad1559edff7ae757512084fb92097"
+    }
+  }
+}

@@ -7,3 +7,5 @@ blob-report/
 *.log
 .DS_Store
 .vite/
+# raw downloads from USGS / Natural Earth (re-created by npm run fetch-data)
+.cache/
