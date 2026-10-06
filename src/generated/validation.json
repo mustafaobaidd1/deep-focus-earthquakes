@@ -1,0 +1,253 @@
+{
+  "generatedAt": "2026-10-06T22:31:15.307Z",
+  "bValue": [
+    {
+      "bTrue": 0.8,
+      "n": 5000,
+      "catalogues": 200,
+      "meanB": 0.799,
+      "sdB": 0.0108,
+      "maxAbsError": 0.029,
+      "withinTolerance": 200,
+      "meanShiBolt": 0.0113,
+      "shiBoltOverEmpirical": 1.04,
+      "meanWithoutUtsuCorrection": 0.88
+    },
+    {
+      "bTrue": 1,
+      "n": 5000,
+      "catalogues": 200,
+      "meanB": 0.995,
+      "sdB": 0.014,
+      "maxAbsError": 0.041,
+      "withinTolerance": 200,
+      "meanShiBolt": 0.014,
+      "shiBoltOverEmpirical": 0.997,
+      "meanWithoutUtsuCorrection": 1.124
+    },
+    {
+      "bTrue": 1.2,
+      "n": 5000,
+      "catalogues": 200,
+      "meanB": 1.191,
+      "sdB": 0.0164,
+      "maxAbsError": 0.05,
+      "withinTolerance": 199,
+      "meanShiBolt": 0.0167,
+      "shiBoltOverEmpirical": 1.02,
+      "meanWithoutUtsuCorrection": 1.381
+    }
+  ],
+  "mc": {
+    "trueMc": 5,
+    "catalogues": 100,
+    "exact": 100,
+    "within01": 100
+  },
+  "dip": [
+    {
+      "trueDip": 20,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 19.3,
+      "maxAbsError": 1.13,
+      "sdDip": 0.283,
+      "meanBootstrapSigma": 0.295
+    },
+    {
+      "trueDip": 35,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 34.75,
+      "maxAbsError": 0.82,
+      "sdDip": 0.265,
+      "meanBootstrapSigma": 0.255
+    },
+    {
+      "trueDip": 45,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 44.8,
+      "maxAbsError": 0.76,
+      "sdDip": 0.259,
+      "meanBootstrapSigma": 0.249
+    },
+    {
+      "trueDip": 60,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 59.93,
+      "maxAbsError": 0.63,
+      "sdDip": 0.253,
+      "meanBootstrapSigma": 0.236
+    },
+    {
+      "trueDip": 75,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 74.96,
+      "maxAbsError": 0.56,
+      "sdDip": 0.225,
+      "meanBootstrapSigma": 0.231
+    },
+    {
+      "trueDip": 85,
+      "slabs": 60,
+      "fitted": 60,
+      "meanDip": 85,
+      "maxAbsError": 0.74,
+      "sdDip": 0.258,
+      "meanBootstrapSigma": 0.225
+    }
+  ],
+  "geodesy": {
+    "rosetta": {
+      "expected": 2886.444442837983,
+      "computed": 2886.4444428379834
+    },
+    "constructedCases": 2000,
+    "maxCrossTrackErrorKm": 3.922195901395753e-12,
+    "maxAlongTrackErrorKm": 4.547473508864641e-12
+  },
+  "catalogue": {
+    "fetchedAt": "2026-10-06T21:04:18.322Z",
+    "total": 87866,
+    "years": 53,
+    "yearsMatchingCountEndpoint": 53,
+    "uniqueIds": 87866,
+    "classes": {
+      "shallow": 69688,
+      "intermediate": 13977,
+      "deep": 4201
+    },
+    "bAll": {
+      "b": 1.079,
+      "sigma": 0.004,
+      "mc": 5,
+      "n": 87866
+    },
+    "bDeep": {
+      "b": 0.906,
+      "sigma": 0.014,
+      "mc": 5,
+      "n": 4201
+    },
+    "b2000on": {
+      "b": 1.096,
+      "sigma": 0.005,
+      "mc": 5,
+      "n": 46462
+    },
+    "bBefore1990": {
+      "b": 1.127,
+      "sigma": 0.007,
+      "mc": 5,
+      "n": 26777
+    },
+    "magTypeShares": {
+      "mb": 46.9,
+      "mwc": 20.5,
+      "mww": 13.3,
+      "mw": 11.1,
+      "ms": 3.7,
+      "mwb": 3.6
+    }
+  },
+  "presets": [
+    {
+      "id": "tonga",
+      "name": "Tonga",
+      "events": 1568,
+      "lengthKm": 978,
+      "maxDepthKm": 686,
+      "dip": {
+        "deg": 46.9,
+        "sigma": 0.3,
+        "n": 981
+      }
+    },
+    {
+      "id": "honshu",
+      "name": "Japan · Honshu",
+      "events": 1513,
+      "lengthKm": 1237,
+      "maxDepthKm": 545,
+      "dip": {
+        "deg": 27.8,
+        "sigma": 0.2,
+        "n": 78
+      }
+    },
+    {
+      "id": "chile",
+      "name": "Chile",
+      "events": 841,
+      "lengthKm": 1108,
+      "maxDepthKm": 598,
+      "dip": {
+        "deg": 32.4,
+        "sigma": 0.6,
+        "n": 571
+      }
+    },
+    {
+      "id": "aleutians",
+      "name": "Aleutians",
+      "events": 818,
+      "lengthKm": 565,
+      "maxDepthKm": 253,
+      "dip": {
+        "deg": 57.5,
+        "sigma": 1.6,
+        "n": 45
+      }
+    },
+    {
+      "id": "sumatra",
+      "name": "Sumatra",
+      "events": 865,
+      "lengthKm": 826,
+      "maxDepthKm": 582,
+      "dip": {
+        "deg": 42,
+        "sigma": 1.6,
+        "n": 130
+      }
+    },
+    {
+      "id": "hindukush",
+      "name": "Hindu Kush",
+      "events": 352,
+      "lengthKm": 247,
+      "maxDepthKm": 272,
+      "dip": {
+        "deg": 82,
+        "sigma": 1.2,
+        "n": 296
+      }
+    },
+    {
+      "id": "aegean",
+      "name": "Aegean",
+      "events": 209,
+      "lengthKm": 505,
+      "maxDepthKm": 168,
+      "dip": {
+        "deg": 21.3,
+        "sigma": 4.2,
+        "n": 24
+      }
+    },
+    {
+      "id": "deadsea",
+      "name": "Dead Sea Transform",
+      "events": 21,
+      "lengthKm": 791,
+      "maxDepthKm": 33,
+      "dip": {
+        "reason": "few-events",
+        "candidates": 0
+      }
+    }
+  ]
+}
