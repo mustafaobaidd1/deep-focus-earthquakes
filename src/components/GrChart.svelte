@@ -1,7 +1,7 @@
 <script lang="ts">
   import { scaleLinear, scaleLog } from 'd3-scale';
   import { line } from 'd3-shape';
-  import { formatInt } from '../lib/format';
+  import { formatInt, formatSigma } from '../lib/format';
   import type { BValue, Fmd } from '../lib/stats';
   import { axis } from './axis';
 
@@ -51,7 +51,7 @@
 
   const summary = $derived(
     b
-      ? `Gutenberg–Richter plot. b-value ${b.b.toFixed(2)} plus or minus ${b.sigma.toFixed(2)}, magnitude of completeness ${b.mc.toFixed(1)}, from ${b.n} earthquakes.`
+      ? `Gutenberg–Richter plot. b-value ${b.b.toFixed(2)} plus or minus ${formatSigma(b.sigma)}, magnitude of completeness ${b.mc.toFixed(1)}, from ${b.n} earthquakes.`
       : `Gutenberg–Richter plot of ${fmd.total} earthquakes; too few for a b-value.`,
   );
 </script>

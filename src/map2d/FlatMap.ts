@@ -65,6 +65,8 @@ export class FlatMap implements MapEngine {
   private down: { x: number; y: number; moved: boolean } | null = null;
   private listeners: [EventTarget, string, EventListener][] = [];
   private insets = { top: 0, bottom: 0 };
+  /** Point sizes follow the map width (designed for a ~900 px wide map). */
+  private sizeScale = 1;
 
   constructor(
     private canvas: HTMLCanvasElement,
@@ -187,6 +189,9 @@ export class FlatMap implements MapEngine {
       ],
       { type: 'Sphere' },
     );
+    // The sphere outline spans the projected width; scale points to it.
+    const b = geoPath(this.projection).bounds({ type: 'Sphere' });
+    this.sizeScale = Math.min(1, Math.max(0.45, (b[1][0] - b[0][0]) / 900));
     this.projectAll();
     this.projectLive();
     this.invalidate(true);
@@ -325,7 +330,7 @@ export class FlatMap implements MapEngine {
           if (d < b.depth10[0] || d > b.depth10[1]) continue;
           if (day < b.day[0] || day > b.day[1]) continue;
         }
-        let size = sizeFor(m / 100);
+        let size = sizeFor(m / 100) * this.sizeScale;
         let alpha = 0.9;
         if (this.playDay >= 0) {
           if (day > this.playDay) continue;
@@ -352,7 +357,7 @@ export class FlatMap implements MapEngine {
         if (b && (m100 < b.mag100[0] || m100 > b.mag100[1])) continue;
         if (b && (d10 < b.depth10[0] || d10 > b.depth10[1])) continue;
         const sp = this.sprite(
-          Math.max(3, 2 + (l.mag[i] - 2.5) * 1.2),
+          Math.max(3, (2 + (l.mag[i] - 2.5) * 1.2) * Math.max(0.7, this.sizeScale)),
           this.colorIndex(l.depthKm[i]),
           true,
         );

@@ -621,7 +621,9 @@ export class GlobeView implements MapEngine {
     const halfVUsable = Math.atan(Math.tan(halfV) * usable);
     const halfH = Math.atan(Math.tan(halfV) * this.camera.aspect);
     const half = Math.min(halfVUsable, halfH);
-    return Math.min(MAX_DISTANCE, Math.max(2.2, 1 / Math.sin(half * 0.86)));
+    // Height-limited views can fill more; width-limited ones keep a side margin for the limb glow.
+    const fill = halfVUsable < halfH ? 0.92 : 0.86;
+    return Math.min(MAX_DISTANCE, Math.max(2.2, 1 / Math.sin(half * fill)));
   }
 
   /** Keeps the globe centred in the area left free by overlays (masthead, toolbars). */

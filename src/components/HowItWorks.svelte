@@ -217,7 +217,14 @@
         <p
           class="eq"
           use:tex={{
-            src: 'd = 2R\\,\\operatorname{atan2}\\!\\left(\\sqrt{h},\\sqrt{1-h}\\right),\\quad h = \\sin^2\\tfrac{\\Delta\\varphi}{2} + \\cos\\varphi_1 \\cos\\varphi_2 \\sin^2\\tfrac{\\Delta\\lambda}{2}',
+            src: 'd = 2R\\,\\operatorname{atan2}\\!\\left(\\sqrt{h},\\sqrt{1-h}\\right)',
+            display: true,
+          }}
+        ></p>
+        <p
+          class="eq"
+          use:tex={{
+            src: 'h = \\sin^2\\tfrac{\\Delta\\varphi}{2} + \\cos\\varphi_1 \\cos\\varphi_2 \\sin^2\\tfrac{\\Delta\\lambda}{2}',
             display: true,
           }}
         ></p>
@@ -235,7 +242,14 @@
         <p
           class="eq"
           use:tex={{
-            src: '\\delta = \\arcsin(\\mathbf{p}\\cdot\\mathbf{n}),\\qquad \\theta = \\operatorname{atan2}(\\mathbf{p}\\cdot\\mathbf{t},\\ \\mathbf{p}\\cdot\\mathbf{a})',
+            src: '\\delta = \\arcsin(\\mathbf{p}\\cdot\\mathbf{n})',
+            display: true,
+          }}
+        ></p>
+        <p
+          class="eq"
+          use:tex={{
+            src: '\\theta = \\operatorname{atan2}(\\mathbf{p}\\cdot\\mathbf{t},\\ \\mathbf{p}\\cdot\\mathbf{a})',
             display: true,
           }}
         ></p>
@@ -253,7 +267,7 @@
         <p
           class="eq"
           use:tex={{
-            src: '\\phi = \\tfrac12 \\operatorname{atan2}\\!\\left(2C_{xz},\\ C_{xx} - C_{zz}\\right),\\qquad \\text{dip} = \\lvert\\phi\\rvert',
+            src: '\\phi = \\tfrac12 \\operatorname{atan2}\\!\\left(2C_{xz},\\ C_{xx} - C_{zz}\\right), \\quad \\text{dip} = \\lvert\\phi\\rvert',
             display: true,
           }}
         ></p>
@@ -514,6 +528,10 @@
 
     .toc {
       columns: 1;
+    }
+
+    .eq {
+      font-size: 0.9rem;
     }
   }
 </style>

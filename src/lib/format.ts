@@ -51,3 +51,9 @@ export function usgsEventUrl(id: string): string {
 export function plural(n: number, one: string, many = `${one}s`): string {
   return `${formatInt(n)} ${n === 1 ? one : many}`;
 }
+
+/** An uncertainty with enough decimals to be non-zero: 0.004 stays 0.004, 0.0312 becomes 0.03. */
+export function formatSigma(sigma: number): string {
+  if (!(sigma > 0)) return '0';
+  return sigma < 0.01 ? sigma.toFixed(3) : sigma.toFixed(2);
+}

@@ -9,9 +9,13 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'github' : 'list',
+  timeout: 60_000,
+  expect: { timeout: 10_000 },
   use: {
     baseURL: BASE,
     trace: 'retain-on-failure',
+    // Machines without a GPU (CI) fall back to SwiftShader so the WebGL globe still renders.
+    launchOptions: { args: ['--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] },
   },
   projects: [
     {

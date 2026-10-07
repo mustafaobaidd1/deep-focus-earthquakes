@@ -1,6 +1,6 @@
 <script lang="ts">
   import { LIMITS } from '../lib/filters';
-  import { formatDate, formatDepth, formatInt } from '../lib/format';
+  import { formatDate, formatDepth, formatInt, formatSigma } from '../lib/format';
   import { depthColorHex } from '../lib/ramp';
   import { MIN_EVENTS_FOR_B } from '../lib/stats';
   import { completeEvent, describeIndex, fetchDetails } from '../state/actions';
@@ -79,7 +79,7 @@
       <div class="readout" aria-live="polite">
         {#if s.b}
           <p class="big num">
-            b = {s.b.b.toFixed(2)} <span class="pm">± {s.b.sigma.toFixed(2)}</span>
+            b = {s.b.b.toFixed(2)} <span class="pm">± {formatSigma(s.b.sigma)}</span>
           </p>
           <p class="small num">
             Magnitude of completeness M<sub>c</sub> = {s.b.mc.toFixed(1)} (maximum curvature) · {formatInt(
@@ -87,6 +87,13 @@
             )}
             earthquakes at or above M<sub>c</sub>
           </p>
+          {#if s.fmd.mags.length > 0 && s.b.mc <= s.fmd.mags[0] + 1e-9}
+            <p class="small caveat">
+              M<sub>c</sub> sits at the lowest magnitude in the selection, so completeness below it cannot
+              be checked; if the catalogue is incomplete there, b is underestimated. Raise the magnitude
+              floor to test the estimate.
+            </p>
+          {/if}
         {:else}
           <p class="big muted">b-value unavailable</p>
           <p class="small">
@@ -218,6 +225,13 @@
     margin: 0;
     font-size: 0.84rem;
     color: var(--ink-2);
+  }
+
+  .caveat {
+    margin-top: 4px;
+    font-style: italic;
+    font-family: var(--serif);
+    color: var(--ink-3);
   }
 
   .largest {
