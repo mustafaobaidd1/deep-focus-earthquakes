@@ -63,7 +63,10 @@
           tickSize: 3,
         }}
       ></g>
-      <g class="axis" use:axis={{ scale: y, orient: 'left', tickValues: yTicks, tickSize: 3 }}></g>
+      <g
+        class="axis"
+        use:axis={{ scale: y, orient: 'left', tickValues: yTicks, tickSize: 0, tickPadding: 15 }}
+      ></g>
       <!-- Depth colour key along the axis -->
       {#each hist as _, k (k)}
         <rect

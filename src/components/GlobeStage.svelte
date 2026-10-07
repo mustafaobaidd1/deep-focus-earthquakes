@@ -382,7 +382,13 @@
 
   {#if app.status === 'loading'}
     <div class="overlay" role="status" aria-live="polite">
-      <div class="skeleton-globe" aria-hidden="true"></div>
+      {#if !engine}
+        <div
+          class="skeleton-globe"
+          aria-hidden="true"
+          style:top={`calc(${insetTop}px + (100% - ${insetTop + insetBottom}px) / 2)`}
+        ></div>
+      {/if}
       <div class="loading-card">
         <p class="eyebrow">Loading the USGS catalogue</p>
         <div class="bar" aria-hidden="true"><span style:width={`${loadingPct}%`}></span></div>
@@ -754,6 +760,18 @@
 
   .loading-card.error .eyebrow {
     color: var(--accent);
+  }
+
+  .loading-card.error .btn {
+    justify-self: start;
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+    backdrop-filter: none;
+  }
+
+  .loading-card.error .btn:hover {
+    background: #000;
   }
 
   .loading-card .bar {

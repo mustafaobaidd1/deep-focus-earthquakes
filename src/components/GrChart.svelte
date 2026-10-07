@@ -92,7 +92,7 @@
 
       {#if Number.isFinite(mc)}
         <line class="mc" x1={x(mc)} x2={x(mc)} y1="0" y2={plotH} />
-        <text class="mc-label" x={x(mc) + 5} y={12}>Mc {mc.toFixed(1)}</text>
+        <text class="mc-label" x={x(mc) + 6} y={plotH - 8}>Mc {mc.toFixed(1)}</text>
       {/if}
 
       {#each fmd.mags as m, j (m)}

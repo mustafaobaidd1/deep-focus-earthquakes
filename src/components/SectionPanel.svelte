@@ -193,7 +193,14 @@
           seismicity dip, and how steeply?{/if}
       </p>
     {:else}
-      <div class="skeleton" aria-busy="true" aria-label="Computing the section"></div>
+      {#if app.status === 'error'}
+        <p class="caption load-error" role="status">
+          Cross-sections need the earthquake catalogue, which did not load. Use “Try again” on the
+          map.
+        </p>
+      {:else}
+        <div class="skeleton" aria-busy="true" aria-label="Computing the section"></div>
+      {/if}
     {/if}
 
     <div class="controls">
@@ -452,6 +459,12 @@
     gap: 10px;
     justify-items: start;
     padding: 18px;
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius);
+  }
+
+  .load-error {
+    padding: 16px;
     border: 1px dashed var(--rule-strong);
     border-radius: var(--radius);
   }

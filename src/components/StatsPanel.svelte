@@ -170,7 +170,13 @@
       </div>
     {/if}
   {:else}
-    <div class="skeleton" aria-busy="true" aria-label="Computing statistics"></div>
+    {#if app.status === 'error'}
+      <p class="caption load-error" role="status">
+        Statistics need the earthquake catalogue, which did not load. Use “Try again” on the map.
+      </p>
+    {:else}
+      <div class="skeleton" aria-busy="true" aria-label="Computing statistics"></div>
+    {/if}
   {/if}
 </section>
 
@@ -306,6 +312,12 @@
     display: grid;
     gap: 6px;
     padding: 18px;
+    border: 1px dashed var(--rule-strong);
+    border-radius: var(--radius);
+  }
+
+  .load-error {
+    padding: 16px;
     border: 1px dashed var(--rule-strong);
     border-radius: var(--radius);
   }
