@@ -881,6 +881,10 @@
     .masthead .scope {
       display: none;
     }
+
+    .tools {
+      max-width: calc(100% - 270px);
+    }
   }
 
   @media (min-width: 700px) and (max-width: 1099px) {

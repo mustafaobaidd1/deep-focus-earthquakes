@@ -127,13 +127,16 @@
         disabled={!isGlobe}
         title={isGlobe ? undefined : 'True depth needs the 3D globe'}
       />
-      {#if app.depthMode && isGlobe}
-        <Segmented
-          label="Vertical exaggeration"
-          options={exagOptions}
-          bind:value={app.exaggeration}
-        />
-      {/if}
+      <!-- Always present (disabled in surface mode) so switching modes never shifts the toolbar. -->
+      <Segmented
+        label="Vertical exaggeration"
+        options={exagOptions}
+        bind:value={app.exaggeration}
+        disabled={!app.depthMode || !isGlobe}
+        title={app.depthMode && isGlobe
+          ? undefined
+          : 'Vertical exaggeration applies in true-depth mode'}
+      />
       <button
         class="btn draw"
         type="button"
@@ -142,7 +145,8 @@
         title="Drag across the map to cut a cross-section (or hold Shift while dragging)"
       >
         <Icon name="pencil" />
-        <span>{app.drawMode ? 'Drawing… drag on the map' : 'Draw section'}</span>
+        <span class="lbl-long">{app.drawMode ? 'Drawing… drag on the map' : 'Draw section'}</span>
+        <span class="lbl-short" aria-hidden="true">{app.drawMode ? 'Drag…' : 'Section'}</span>
       </button>
     </div>
     <div class="row secondary">
@@ -227,9 +231,30 @@
     min-width: 9.5rem;
   }
 
+  .lbl-short {
+    display: none;
+  }
+
   /* On a narrow stage the secondary toggles become icon buttons; their text stays as the
      accessible name, and each keeps its tooltip. */
   @container stage (max-width: 820px) {
+    .wide .draw {
+      min-width: 0;
+    }
+
+    .wide .lbl-long {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .wide .lbl-short {
+      display: inline;
+    }
+
     .wide .secondary :global(.btn) {
       width: 38px;
       padding: 0;
