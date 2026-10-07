@@ -57,7 +57,8 @@ export const pointsVertex = /* glsl */ `
 
     float surface = nearSide(p);
     float facing = dot(aDir, normalize(cameraPosition));
-    float inside = mix(0.3, 1.0, smoothstep(-0.75, 0.45, facing));
+    // Inside the translucent Earth, the far hemisphere fades so the near slabs read clearly.
+    float inside = mix(0.07, 1.0, smoothstep(-0.25, 0.35, facing));
     float vis = mix(surface, inside, uDepthMix);
 
     float m = max(aMag * 0.01 - 5.0, 0.0);
@@ -132,7 +133,8 @@ export const liveVertex = /* glsl */ `
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
     float surface = nearSide(p);
     float facing = dot(aDir, normalize(cameraPosition));
-    float inside = mix(0.3, 1.0, smoothstep(-0.75, 0.45, facing));
+    // Inside the translucent Earth, the far hemisphere fades so the near slabs read clearly.
+    float inside = mix(0.07, 1.0, smoothstep(-0.25, 0.35, facing));
     float vis = mix(surface, inside, uDepthMix);
 
     float m = aMag - 2.5;
@@ -154,11 +156,13 @@ export const liveFragment = /* glsl */ `
     if (vAlpha <= 0.003) discard;
     float d = length(gl_PointCoord - 0.5) * 2.0;
     if (d > 1.0) discard;
-    float ringR = 0.72 + 0.18 * vPulse;
-    float ring = 1.0 - smoothstep(0.1, 0.2, abs(d - ringR));
-    float dot0 = 1.0 - smoothstep(0.16, 0.26, d);
-    float a = max(ring, dot0 * 0.9) * vAlpha;
-    gl_FragColor = vec4(vColor * a, a);
+    // A paper-white ring (the live layer) around a dot in the depth colour.
+    float ringR = 0.74 + 0.16 * vPulse;
+    float ring = 1.0 - smoothstep(0.08, 0.17, abs(d - ringR));
+    float dot0 = 1.0 - smoothstep(0.3, 0.4, d);
+    vec3 col = mix(vec3(0.965, 0.949, 0.914), vColor, step(0.5, dot0) * (1.0 - ring));
+    float a = max(ring * 0.95, dot0) * vAlpha;
+    gl_FragColor = vec4(col * a, a);
   }
 `;
 

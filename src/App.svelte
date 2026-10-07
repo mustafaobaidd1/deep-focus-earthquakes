@@ -11,6 +11,8 @@
   import { app, type PanelTab } from './state/app.svelte';
 
   let wide = $state(true);
+  // Only whole-year steps of the playback head refresh the numbers (the head moves every frame).
+  const playYearFloor = $derived(app.playYear === null ? null : Math.floor(app.playYear));
 
   onMount(() => {
     const params = new URLSearchParams(location.search);
@@ -51,7 +53,7 @@
       app.filter.depthMax,
       app.filter.yearMin,
       app.filter.yearMax,
-      app.playYear === null ? null : Math.floor(app.playYear),
+      playYearFloor,
     ];
     void deps;
     clearTimeout(statsTimer);
@@ -71,7 +73,7 @@
       app.filter.depthMax,
       app.filter.yearMin,
       app.filter.yearMax,
-      app.playYear === null ? null : Math.floor(app.playYear),
+      playYearFloor,
     ];
     void deps;
     clearTimeout(sectionTimer);

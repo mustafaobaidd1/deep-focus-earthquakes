@@ -28,7 +28,14 @@ import {
   type Object3D,
 } from 'three';
 import type { Bounds } from '../lib/filters';
-import { makeSection, offsetPoint, pointAlong, toLatLon, type SectionGeometry } from '../lib/geo';
+import {
+  makeSection,
+  normalize,
+  offsetPoint,
+  pointAlong,
+  toLatLon,
+  type SectionGeometry,
+} from '../lib/geo';
 import { rampTexels } from '../lib/ramp';
 import type { EngineCallbacks, MapEngine, PickHit, SectionOverlay } from '../state/engine';
 import type { CatalogColumns, LiveData, PolylineColumns } from '../worker/protocol';
@@ -129,7 +136,7 @@ export class GlobeView implements MapEngine {
   private depthFrom = 0;
   private depthTarget = 0;
   private depthStart = -1;
-  private exaggeration = 2;
+  private exaggeration = 4;
   private reducedMotion: boolean;
   private section: SectionOverlay | null = null;
   private sectionGeom: SectionGeometry | null = null;
@@ -499,7 +506,15 @@ export class GlobeView implements MapEngine {
   // ---------------------------------------------------------------- modes
 
   setDepthMode(on: boolean, animate = true) {
+    const was = this.depthTarget;
     this.depthTarget = on ? 1 : 0;
+    // Turning depth on while looking at the active section: swing round to see it edge-on.
+    if (on && was < 0.5 && this.sectionGeom) {
+      const m = pointAlong(this.sectionGeom, 0.5);
+      const c = this.camera.position;
+      const cam = normalize([c.x, -c.z, c.y]);
+      if (m[0] * cam[0] + m[1] * cam[1] + m[2] * cam[2] > 0.45) this.flyToSection();
+    }
     if (!animate || this.reducedMotion) {
       this.depthMix = this.depthTarget;
       this.depthStart = -1;
@@ -557,9 +572,35 @@ export class GlobeView implements MapEngine {
   flyToSection() {
     const g = this.sectionGeom;
     if (!g) return;
-    const [lat, lon] = toLatLon(pointAlong(g, 0.5));
-    // Frame the section: longer sections need a more distant camera.
-    const dist = Math.min(MAX_DISTANCE, Math.max(1.9, 1.55 + (g.angle / DEG) * 0.07));
+    const m = pointAlong(g, 0.5);
+    if (this.depthTarget > 0.5) {
+      // True-depth mode: turn the globe so the section stands on its rim. Looking (nearly) along
+      // the normal of the section's great-circle plane puts that plane edge-on to the camera,
+      // so the slab beneath the line is seen in profile, as in the section chart.
+      const beta = 28 * DEG;
+      const c = this.camera.position;
+      const cam = normalize([c.x, -c.z, c.y]);
+      const [p, q] = [1, -1].map((s) =>
+        normalize([
+          g.n[0] * s * Math.cos(beta) + m[0] * Math.sin(beta),
+          g.n[1] * s * Math.cos(beta) + m[1] * Math.sin(beta),
+          g.n[2] * s * Math.cos(beta) + m[2] * Math.sin(beta),
+        ]),
+      );
+      // Prefer the lower-latitude viewpoint (a polar view feels disorienting); when both are
+      // similar, take the shorter turn from where the camera is now.
+      const latDiff = Math.abs(Math.asin(p[2])) - Math.abs(Math.asin(q[2]));
+      const closer = (a: number[], b: number[]) =>
+        a[0] * cam[0] + a[1] * cam[1] + a[2] * cam[2] >=
+        b[0] * cam[0] + b[1] * cam[1] + b[2] * cam[2];
+      const best = Math.abs(latDiff) > 10 * DEG ? (latDiff < 0 ? p : q) : closer(p, q) ? p : q;
+      const [lat, lon] = toLatLon(best);
+      this.flyTo(lat, lon, Math.max(3.6, this.fitDistance()));
+      return;
+    }
+    const [lat, lon] = toLatLon(m);
+    // Frame the section from above: longer sections need a more distant camera.
+    const dist = Math.min(MAX_DISTANCE, Math.max(2.1, 1.7 + (g.angle / DEG) * 0.075));
     this.flyTo(lat, lon, dist);
   }
 
@@ -762,7 +803,10 @@ export class GlobeView implements MapEngine {
     marker.geometry.getAttribute('position').needsUpdate = true;
     const m = Math.max(0, this.magOf(hit) - 5);
     const core = (2.1 + 1.55 * m + 0.6 * m * m) * (this.shared.uSizeScale.value as number);
-    (marker.material as ShaderMaterial).uniforms.uSize.value = Math.max(18, core * 2.4 + 12);
+    (marker.material as ShaderMaterial).uniforms.uSize.value = Math.min(
+      56,
+      Math.max(18, core * 1.6 + 12),
+    );
     marker.visible = true;
   }
 
@@ -1161,7 +1205,7 @@ export class GlobeView implements MapEngine {
     const screenFactor = Math.min(1, Math.max(0.62, span / 760));
     const ref = this.fitDistance();
     this.shared.uSizeScale.value =
-      Math.min(2.4, Math.max(0.75, ((ref - 1) / (view.distance - 1)) ** 0.6)) * screenFactor;
+      Math.min(1.7, Math.max(0.7, ((ref - 1) / (view.distance - 1)) ** 0.35)) * screenFactor;
 
     if (this.live) {
       (this.live.material as ShaderMaterial).uniforms.uTime.value = (now - this.startTime) / 1000;

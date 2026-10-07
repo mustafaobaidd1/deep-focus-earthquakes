@@ -48,10 +48,7 @@
   }
 
   // Corridor half-width: applied when the slider is released (keeps the worker quiet mid-drag).
-  let widthDraft = $state(150);
-  $effect(() => {
-    widthDraft = app.section?.halfWidthKm ?? 150;
-  });
+  let widthDraft = $derived(app.section?.halfWidthKm ?? 150);
   function commitWidth() {
     if (!app.section || widthDraft === app.section.halfWidthKm) return;
     app.section = { ...app.section, halfWidthKm: widthDraft };
@@ -59,12 +56,17 @@
 
   // Endpoint editor (the keyboard way to cut any section).
   let editOpen = $state(false);
-  let ed = $state({ latA: 0, lonA: 0, latB: 0, lonB: 0 });
+  let ed = $derived(
+    app.section
+      ? {
+          latA: app.section.a[0],
+          lonA: app.section.a[1],
+          latB: app.section.b[0],
+          lonB: app.section.b[1],
+        }
+      : { latA: 0, lonA: 0, latB: 0, lonB: 0 },
+  );
   let edError = $state<string | null>(null);
-  $effect(() => {
-    const s = app.section;
-    if (s) ed = { latA: s.a[0], lonA: s.a[1], latB: s.b[0], lonB: s.b[1] };
-  });
   function applyEndpoints(e: SubmitEvent) {
     e.preventDefault();
     const vals = [ed.latA, ed.lonA, ed.latB, ed.lonB].map(Number);
@@ -171,7 +173,7 @@
         <SectionChart {result} trueAspect={app.trueAspect} />
         <figcaption class="caption small-cap">
           <span class="fig-label">Fig. 2.</span>
-          {formatInt(result.index.length)} earthquakes within {app.section.halfWidthKm} km of the line
+          {plural(result.index.length, 'earthquake')} within {app.section.halfWidthKm} km of the line
           A–A′, coloured by depth and sized by magnitude.
         </figcaption>
       </figure>
@@ -257,7 +259,8 @@
               step="0.01"
               min="-90"
               max="90"
-              bind:value={ed.latA}
+              value={ed.latA}
+              oninput={(e) => (ed = { ...ed, latA: e.currentTarget.valueAsNumber })}
               required
             /></label
           >
@@ -267,7 +270,8 @@
               step="0.01"
               min="-180"
               max="180"
-              bind:value={ed.lonA}
+              value={ed.lonA}
+              oninput={(e) => (ed = { ...ed, lonA: e.currentTarget.valueAsNumber })}
               required
             /></label
           >
@@ -280,7 +284,8 @@
               step="0.01"
               min="-90"
               max="90"
-              bind:value={ed.latB}
+              value={ed.latB}
+              oninput={(e) => (ed = { ...ed, latB: e.currentTarget.valueAsNumber })}
               required
             /></label
           >
@@ -290,7 +295,8 @@
               step="0.01"
               min="-180"
               max="180"
-              bind:value={ed.lonB}
+              value={ed.lonB}
+              oninput={(e) => (ed = { ...ed, lonB: e.currentTarget.valueAsNumber })}
               required
             /></label
           >

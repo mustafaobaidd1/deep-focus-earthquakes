@@ -23,6 +23,7 @@
   let midWidth = $state(false);
   let noticeDismissed = $state(false);
   let sectionToast = $state(false);
+  let hintExpired = $state(false);
   let viewportW = $state(0);
   let masthead = $state<HTMLElement>();
   let tools = $state<HTMLElement>();
@@ -136,6 +137,13 @@
 
   $effect(() => {
     engine?.setInsets?.(insetTop, insetBottom);
+  });
+
+  // The first-use hint retires after its first use, or after 15 s.
+  $effect(() => {
+    if (app.status !== 'ready') return;
+    const t = setTimeout(() => (hintExpired = true), 15000);
+    return () => clearTimeout(t);
   });
 
   $effect(() => {
@@ -253,7 +261,7 @@
       case 'stale':
         return `Live feed out of date: showing the copy from ${formatAge(Date.now() - (app.liveFetchedAt ?? Date.now()))}. ${app.liveError ?? ''}`;
       case 'error':
-        return `Live feed unavailable. ${app.liveError ?? ''} The 1973–2025 catalogue is still complete.`;
+        return `Live feed unavailable. ${app.liveError ?? ''} The bundled 1973–2025 catalogue works offline.`;
       default:
         return '';
     }
@@ -329,7 +337,7 @@
     </div>
   {/if}
 
-  {#if app.status === 'ready' && !app.interacted && !compact}
+  {#if app.status === 'ready' && !app.interacted && !hintExpired && !compact}
     <p class="hint" aria-hidden="true">{hint}</p>
   {:else if app.drawMode}
     <p class="hint drawing-hint" role="status">
@@ -338,7 +346,7 @@
         >Cancel</button
       >
     </p>
-  {:else if app.status === 'ready' && !app.interacted && compact}
+  {:else if app.status === 'ready' && !app.interacted && !hintExpired && compact}
     <p class="hint" aria-hidden="true">{hint}</p>
   {/if}
 
@@ -488,6 +496,22 @@
     left: 22px;
     z-index: 3;
     max-width: min(46%, 440px);
+    pointer-events: none;
+    text-shadow:
+      0 1px 2px rgba(14, 17, 22, 0.9),
+      0 0 18px rgba(14, 17, 22, 0.85);
+  }
+
+  /* A soft basalt scrim keeps the title legible when points pass behind it. */
+  .stage-inner::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    width: min(560px, 70%);
+    height: 150px;
+    background: radial-gradient(ellipse at 0% 0%, rgba(14, 17, 22, 0.85), rgba(14, 17, 22, 0) 70%);
     pointer-events: none;
   }
 

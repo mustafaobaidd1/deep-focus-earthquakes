@@ -9,12 +9,14 @@
 
   function onKey(e: KeyboardEvent) {
     const i = tabs.findIndex((t) => t.id === active);
-    let next = i;
-    if (e.key === 'ArrowRight') next = (i + 1) % tabs.length;
-    else if (e.key === 'ArrowLeft') next = (i - 1 + tabs.length) % tabs.length;
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = tabs.length - 1;
-    else return;
+    const moves: Record<string, number> = {
+      ArrowRight: (i + 1) % tabs.length,
+      ArrowLeft: (i - 1 + tabs.length) % tabs.length,
+      Home: 0,
+      End: tabs.length - 1,
+    };
+    const next = moves[e.key];
+    if (next === undefined) return;
     e.preventDefault();
     active = tabs[next].id;
     list?.querySelector<HTMLButtonElement>(`#tab-${tabs[next].id}`)?.focus();

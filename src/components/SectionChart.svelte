@@ -141,20 +141,24 @@
     const n = byAlong.length;
     if (n === 0) return;
     const pos = hover === null ? -1 : byAlong.indexOf(hover);
-    let next = pos;
     const big = Math.max(1, Math.round(n / 20));
-    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = Math.min(n - 1, pos + 1);
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown')
-      next = Math.max(0, pos < 0 ? 0 : pos - 1);
-    else if (e.key === 'PageUp') next = Math.min(n - 1, pos + big);
-    else if (e.key === 'PageDown') next = Math.max(0, pos - big);
-    else if (e.key === 'Home') next = 0;
-    else if (e.key === 'End') next = n - 1;
-    else if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       onClick();
       return;
-    } else return;
+    }
+    const moves: Record<string, number> = {
+      ArrowRight: Math.min(n - 1, pos + 1),
+      ArrowUp: Math.min(n - 1, pos + 1),
+      ArrowLeft: Math.max(0, pos - 1),
+      ArrowDown: Math.max(0, pos - 1),
+      PageUp: Math.min(n - 1, pos + big),
+      PageDown: Math.max(0, pos - big),
+      Home: 0,
+      End: n - 1,
+    };
+    const next = moves[e.key];
+    if (next === undefined) return;
     e.preventDefault();
     hover = byAlong[next];
   }

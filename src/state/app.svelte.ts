@@ -61,7 +61,7 @@ class AppState {
 
   filter = $state<Filter>(defaultFilter());
   depthMode = $state(false);
-  exaggeration = $state(2);
+  exaggeration = $state(4);
   autoRotate = $state(true);
   showPlates = $state(true);
   view = $state<ViewKind>('globe');

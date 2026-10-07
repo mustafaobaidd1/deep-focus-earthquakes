@@ -87,8 +87,9 @@ export class FlatMap implements MapEngine {
 
   setCatalog(cat: CatalogColumns) {
     this.catalog = cat;
+    // Shallow first, so deeper events show as coloured bands behind each trench (as on the globe).
     const idx = Array.from({ length: cat.count }, (_, i) => i).sort(
-      (p, q) => cat.mag100[p] - cat.mag100[q] || p - q,
+      (p, q) => cat.depth10[p] - cat.depth10[q] || cat.mag100[p] - cat.mag100[q] || p - q,
     );
     this.order = Uint32Array.from(idx);
     this.projectAll();
@@ -242,14 +243,19 @@ export class FlatMap implements MapEngine {
     const r = (q / 2) * this.dpr;
     const c = px / 2;
     if (ring) {
-      g.strokeStyle = this.colors[colorIndex];
+      // Live events: a paper-white ring around a dot in the depth colour (as on the globe).
+      g.strokeStyle = 'rgba(246, 242, 233, 0.95)';
       g.lineWidth = 1.4 * this.dpr;
       g.beginPath();
       g.arc(c, c, Math.max(r * 1.4, 2.5 * this.dpr), 0, Math.PI * 2);
       g.stroke();
+      g.fillStyle = this.colors[colorIndex];
+      g.beginPath();
+      g.arc(c, c, Math.max(r * 0.55, 1.2 * this.dpr), 0, Math.PI * 2);
+      g.fill();
     } else {
       const halo = g.createRadialGradient(c, c, r * 0.8, c, c, r * 2);
-      halo.addColorStop(0, `${this.colors[colorIndex]}55`);
+      halo.addColorStop(0, `${this.colors[colorIndex]}38`);
       halo.addColorStop(1, `${this.colors[colorIndex]}00`);
       g.fillStyle = halo;
       g.fillRect(0, 0, px, px);

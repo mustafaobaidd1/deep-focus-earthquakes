@@ -210,6 +210,12 @@
 
   .filters.paper {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'count'
+      'time'
+      'mag'
+      'depth';
+    gap: 22px;
   }
 
   .count {
@@ -317,11 +323,7 @@
     min-width: 0;
   }
 
-  .filters :global(.range) {
-    grid-area: auto;
-  }
-
-  .filters.dark > :global(.range) {
+  .filters > :global(.range) {
     grid-area: mag;
   }
 
