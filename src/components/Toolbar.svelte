@@ -227,6 +227,24 @@
     min-width: 9.5rem;
   }
 
+  /* On a narrow stage the secondary toggles become icon buttons; their text stays as the
+     accessible name, and each keeps its tooltip. */
+  @container stage (max-width: 820px) {
+    .wide .secondary :global(.btn) {
+      width: 38px;
+      padding: 0;
+    }
+
+    .wide .secondary :global(.btn span) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+  }
+
   .compact {
     display: grid;
     gap: 8px;

@@ -109,15 +109,19 @@
           <span aria-hidden="true">←</span> Mustafa Obaid · Portfolio
         </a>
         <span class="spacer"></span>
-        <button class="btn quiet how" type="button" onclick={() => (app.howOpen = true)}>
-          How it works
-        </button>
         <a class="btn quiet" href="https://github.com/mustafaobaidd1/deep-focus-earthquakes">
           Source code
         </a>
       </nav>
 
-      <Tabs {tabs} bind:active={app.tab} />
+      <div class="tabrow">
+        <Tabs {tabs} bind:active={app.tab} />
+        {#if wide}
+          <button class="btn quiet how" type="button" onclick={() => (app.howOpen = true)}>
+            How it works
+          </button>
+        {/if}
+      </div>
     </div>
 
     <div class="panel-body">
@@ -203,6 +207,7 @@
   }
 
   .topnav .home {
+    white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 0.4em;
@@ -224,9 +229,29 @@
   }
 
   .topnav .btn {
-    padding: 0 0.7rem;
+    padding: 0 0.55rem;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.84rem;
+  }
+
+  .tabrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-right: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tabrow :global(.tabs) {
+    flex: 1;
+    border-bottom: 0;
+  }
+
+  .tabrow .how {
+    flex: none;
+    padding: 0 0.6rem;
+    font-size: 0.84rem;
+    color: var(--accent);
   }
 
   .panel-body {
@@ -298,10 +323,6 @@
 
     .topnav .home {
       font-size: 0.875rem;
-    }
-
-    .topnav .how {
-      display: none;
     }
   }
 </style>

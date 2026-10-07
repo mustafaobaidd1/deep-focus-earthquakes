@@ -220,6 +220,20 @@
     border: 1.5px solid var(--on-dark);
   }
 
+  /* On a narrow stage the corner card sheds its secondary rows to stay clear of the globe. */
+  @container stage (max-width: 820px) {
+    .legend.full {
+      width: 196px;
+      gap: 6px;
+      padding: 8px 10px;
+    }
+
+    .legend.full .classes,
+    .legend.full .keys {
+      display: none;
+    }
+  }
+
   .inline {
     display: flex;
     align-items: center;

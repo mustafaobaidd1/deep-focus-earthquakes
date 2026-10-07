@@ -440,6 +440,7 @@
     flex: 1;
     min-height: 0;
     overflow: hidden;
+    container: stage / inline-size;
     background:
       radial-gradient(ellipse at 50% 45%, rgba(58, 70, 86, 0.18), transparent 62%), var(--basalt);
   }
@@ -557,7 +558,7 @@
     display: grid;
     justify-items: end;
     gap: 8px;
-    max-width: calc(54% - 16px);
+    max-width: calc(58% - 16px);
   }
 
   .live-status {
@@ -873,6 +874,13 @@
 
   .compact .notice {
     top: 64px;
+  }
+
+  /* A narrow stage (small laptops with the side panel open): keep the title block compact. */
+  @container stage (max-width: 820px) {
+    .masthead .scope {
+      display: none;
+    }
   }
 
   @media (min-width: 700px) and (max-width: 1099px) {
